@@ -19,4 +19,7 @@ test("button click flow", () => {
 
 	// check button color
 	expect(buttonElement).toHaveClass("blue");
+	// expect(buttonElement).toHaveStyle({
+	// 	"background-color": "rgb(0, 0, 255)",
+	// });
 });
