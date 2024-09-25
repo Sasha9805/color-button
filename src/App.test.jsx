@@ -27,17 +27,46 @@ test("button click flow", () => {
 test("checkbox flow", () => {
 	render(<App />);
 
+	// find elements
 	const buttonElement = screen.getByRole("button", { name: /blue/i });
 	const checkboxElement = screen.getByRole("checkbox", {
 		name: /disable button/i,
 	});
 
+	// check initial conditions
 	expect(buttonElement).toBeEnabled();
 	expect(checkboxElement).not.toBeChecked();
 
+	// click checkbox to disable button
 	fireEvent.click(checkboxElement);
 	expect(buttonElement).toBeDisabled();
+	expect(buttonElement).toHaveClass("gray");
 
+	// click checkbox again to re-enable button
 	fireEvent.click(checkboxElement);
 	expect(buttonElement).toBeEnabled();
+	expect(buttonElement).toHaveClass("red");
+});
+
+test("checkbox flow after button click", () => {
+	render(<App />);
+
+	// find elements
+	const buttonElement = screen.getByRole("button", { name: /blue/i });
+	const checkboxElement = screen.getByRole("checkbox", {
+		name: /disable button/i,
+	});
+
+	// click button to change color to blue
+	fireEvent.click(buttonElement);
+
+	// click checkbox to disable button
+	fireEvent.click(checkboxElement);
+	expect(buttonElement).toBeDisabled();
+	expect(buttonElement).toHaveClass("gray");
+
+	// click checkbox again to re-enable button
+	fireEvent.click(checkboxElement);
+	expect(buttonElement).toBeEnabled();
+	expect(buttonElement).toHaveClass("blue");
 });
